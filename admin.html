@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#f5f2ec">
+  <title>Управление коллекцией — ASCENT</title>
+  <link rel="icon" href="assets/ascent-mountain-mark.jpg">
+  <link rel="stylesheet" href="admin.css">
+  <script defer src="catalog-data.js"></script>
+  <script defer src="catalog-service.js"></script>
+  <script defer src="admin.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <a class="wordmark" href="index.html" aria-label="ASCENT — главная">
+      <img src="assets/ascent-mountain-mark.jpg" alt="" width="33" height="33">
+      <span>ASCENT</span>
+    </a>
+    <nav aria-label="Навигация владельца"><a href="index.html">Открыть сайт ↗</a><button type="button" id="logout" hidden>Выйти</button></nav>
+  </header>
+  <main>
+    <p class="status" id="notice" role="status" aria-live="polite">Подключаемся…</p>
+    <section class="auth" id="auth" hidden>
+      <div class="auth-copy">
+        <h1>Вход владельца</h1>
+        <form id="login-form">
+          <label>Электронная почта<input id="email" type="email" required autocomplete="username"></label>
+          <label>Пароль<input id="password" type="password" required autocomplete="current-password"></label>
+          <button class="primary" id="login" type="submit">Войти <span aria-hidden="true">→</span></button>
+          <p class="field-error" id="login-error" role="alert"></p>
+        </form>
+      </div>
+      <div class="auth-photo"><img src="assets/garment-label.webp" alt="" width="960" height="1280"></div>
+    </section>
+    <section id="collection" hidden>
+      <div class="page-head">
+        <h1 tabindex="-1" id="collection-title">Коллекция</h1>
+        <button type="button" id="new" class="primary" hidden><span aria-hidden="true">＋</span> Добавить товар</button>
+      </div>
+      <div class="setup" id="setup" hidden>
+        <strong>Предпросмотр коллекции</strong>
+        <p>Чтобы редактировать товары, подключите Supabase к проекту Vercel и создайте учётную запись владельца. Порядок настройки описан в <a href="README.md">инструкции проекта</a>.</p>
+      </div>
+      <div id="products" class="products"></div>
+    </section>
+    <section id="editor" hidden>
+      <button type="button" class="back text-button" id="back">← К коллекции</button>
+      <div class="page-head editor-head"><h1 id="editor-title" tabindex="-1">Новая вещь</h1></div>
+      <form id="product-form">
+        <fieldset id="product-fields" class="product-fields">
+          <div class="editor-columns">
+            <div>
+              <section class="form-card" aria-labelledby="details-title">
+                <h2 id="details-title">О вещи</h2>
+                <label>Название модели<input id="name" required maxlength="120" autocomplete="off"></label>
+                <label>Категория<select id="category"><option value="tees">Футболка</option><option value="hoodies">Худи</option><option value="longsleeves">Лонгслив</option></select></label>
+                <label>Описание на русском<textarea id="ru" rows="4" maxlength="4000"></textarea></label>
+                <label>Описание на английском <small>по желанию</small><textarea id="en" rows="3" maxlength="4000" lang="en"></textarea></label>
+                <details class="extra"><summary>Принт и выпуск</summary>
+                  <label>Надпись на принте<input id="line" maxlength="200"></label>
+                  <label>Выпуск<input id="edition" maxlength="80" placeholder="001 / 2026"></label>
+                </details>
+              </section>
+              <section class="form-card" aria-labelledby="variants-title">
+                <h2 id="variants-title">Цена и размеры</h2>
+                <label>Цена, ₽<input id="price" type="number" min="1" max="99999999" step="1" inputmode="numeric"></label>
+                <label class="check"><input id="on-request" type="checkbox"> Цена по запросу</label>
+                <label class="check"><input id="concept" type="checkbox"> Модель в разработке</label>
+                <fieldset class="sizes"><legend>Доступные размеры</legend><div class="pills" id="sizes"></div></fieldset>
+              </section>
+            </div>
+            <section class="form-card media-card" aria-labelledby="photos-title">
+              <h2 id="photos-title">Фотографии</h2>
+              <p class="hint">Выберите цвета модели и обложку для каждого цвета. Подойдут JPG, PNG и WebP до 8 МБ.</p>
+              <div id="covers"></div>
+              <div class="extra-photos"><h3>Другие ракурсы</h3>
+                <p class="hint">Эти снимки видны в галерее всех цветов модели.</p>
+                <div id="gallery" class="gallery"></div>
+                <label class="file-button">＋ Добавить фото<input id="gallery-files" type="file" accept="image/jpeg,image/png,image/webp" multiple></label>
+              </div>
+            </section>
+          </div>
+          <div class="actions">
+            <button type="button" class="danger text-button" id="delete" hidden>Удалить товар</button>
+            <button type="submit" id="save" class="primary">Сохранить товар <span aria-hidden="true">→</span></button>
+          </div>
+        </fieldset>
+        <p id="form-error" class="field-error" role="alert"></p>
+      </form>
+    </section>
+    <button type="button" class="secondary" id="retry" hidden>Повторить подключение</button>
+    <noscript>Для работы с панелью включите JavaScript в браузере.</noscript>
+  </main>
+</body>
+</html>
